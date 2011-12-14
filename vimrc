@@ -262,6 +262,13 @@
         nmap <silent> <F10> :YRShow<CR>
     " }
 
+    " VimWiki {
+        let wiki_default = {}
+        let wiki_default.path = "$HOME/Wiki/wiki/"
+        let wiki_default.path_html = "$HOME/Wiki/html/"
+        let g:vimwiki_list = [ wiki_default ]
+    " }
+
 " }
 
 " Utilities {

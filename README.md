@@ -49,4 +49,5 @@ Plugins Reference
 * [Surround](https://github.com/tpope/vim-surround)
 * [delimitMate](https://github.com/Raimondi/delimitMate)
 * [Coffee-script](https://github.com/kchmck/vim-coffee-script)
+* [VimWiki](http://code.google.com/p/vimwiki/)
 
