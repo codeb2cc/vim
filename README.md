@@ -1,27 +1,35 @@
 codeb2cc's Vim Configuration
 ============================
 Author: codeb2cc
-Email: codeb2cc@gmail.com
+
+Email: codeb2cc{at}gmail.com
 
 INSTALLATION (Linux)
 --------------------
+
 1. Check out from github
+
   git clone git://github.com/codeb2cc/vim.git ~/.vim
 
 2. Link config file
+
   ln -s ~/.vim/vimrc ~/.vimrc
 
 3. Fetch vim plugins
+
   cd ~/.vim
   git submodule update --init
 
 INSTALLATION (Windows)
 ----------------------
+
 Similar to the installation on Linux, except `.vim` -> `vimfiles` and `.vimrc` -> `_vimrc`. Put them in your HOME directory like:
+
   C:\Users\codeb2cc\
 
 SHORTCUTS
 ---------
+
 * `F2`: NERDTree window
 * `F3`: Tagbar window
 * `F4`:
@@ -37,6 +45,7 @@ For more detail, just look into the vimrc file.
 
 PLUGINS REFERENCE
 -----------------
+
 * [Pathogen](https://github.com/tpope/vim-pathogen)
 * [miniBufExpl](https://github.com/fholgado/minibufexpl.vim)
 * [Tagbar](https://github.com/majutsushi/tagbar)
