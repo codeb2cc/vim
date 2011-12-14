@@ -10,7 +10,7 @@ Using Git Bash:
 
 1. Check out
 
-        git clone git://github.com/codeb2cc/vim.git $HOME/vimfiles
+        git clone -branch windows git://github.com/codeb2cc/vim.git $HOME/vimfiles
 
 2. Link config file
 

@@ -256,7 +256,7 @@
     " }
 
     " YankRing {
-        let g:yankring_history_dir = "%HOME/vimfiles"
+        let g:yankring_history_dir = "$HOME/vimfiles"
         let g:yankring_history_file = ".yankring_history"
         let g:yankring_window_height = 6
         nmap <silent> <F10> :YRShow<CR>
