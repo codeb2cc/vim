@@ -6,7 +6,7 @@ Email: codeb2cc{at}gmail.com
 
 Installation
 --------------------
-* Using Git Bash:
+Using Git Bash:
 
 1. Check out
 
