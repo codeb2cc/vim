@@ -58,4 +58,4 @@ Plugins Reference
 * [Coffee-script](https://github.com/kchmck/vim-coffee-script)
 * [Xterm-Color-Table](https://github.com/guns/xterm-color-table.vim)
 * [Command-T](https://wincent.com/products/command-t)
-
+* [VimWiki](http://code.google.com/p/vimwiki)
