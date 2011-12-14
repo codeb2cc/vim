@@ -9,23 +9,23 @@ INSTALLATION (Linux)
 
 1. Check out from github
 
-  `git clone git://github.com/codeb2cc/vim.git ~/.vim`
+        git clone git://github.com/codeb2cc/vim.git ~/.vim
 
 2. Link config file
 
-  `ln -s ~/.vim/vimrc ~/.vimrc`
+        ln -s ~/.vim/vimrc ~/.vimrc
 
 3. Fetch vim plugins
 
-  `cd ~/.vim
-  git submodule update --init`
+        cd ~/.vim
+        git submodule update --init
 
 INSTALLATION (Windows)
 ----------------------
 
 Similar to the installation on Linux, except `.vim` -> `vimfiles` and `.vimrc` -> `_vimrc`. Put them in your HOME directory like:
 
-  `C:\Users\codeb2cc\`
+        C:\Users\codeb2cc\
 
 SHORTCUTS
 ---------
