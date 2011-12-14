@@ -1,23 +1,24 @@
-codeb2cc's Vim Configuration
-============================
+codeb2cc's Vim Configuration (Windows Version)
+==============================================
 Author: codeb2cc
 
 Email: codeb2cc{at}gmail.com
 
 Installation
 --------------------
+* Using Git Bash:
 
 1. Check out
 
-        git clone git://github.com/codeb2cc/vim.git ~/.vim
+        git clone git://github.com/codeb2cc/vim.git $HOME/vimfiles
 
 2. Link config file
 
-        ln -s ~/.vim/vimrc ~/.vimrc
+        cp $HOME/vimfiles/vimrc $HOME/_vimrc
 
 3. Fetch vim plugins
 
-        cd ~/.vim
+        cd $HOME/vimfiles
         git submodule update --init
 
 Shortcuts
@@ -25,10 +26,10 @@ Shortcuts
 
 * `F2`: NERDTree window
 * `F3`: Tagbar window
-* `F4`: Syntastic check
+* `F4`:
 * `F5`: Place a sign on current line
 * `F6`: Remove a sign on current line
-* `F7`: Update the 'Last Modified' string
+* `F7`: Update the `Last Modified` string
 * `F8`: shortcut of `:nohlsearch<CR>`
 * `F9`: miniBufExpl window
 * `F10`: YankRing window
@@ -47,9 +48,5 @@ Plugins Reference
 * [SuperTab](https://github.com/ervandew/supertab)
 * [Surround](https://github.com/tpope/vim-surround)
 * [delimitMate](https://github.com/Raimondi/delimitMate)
-* [Syntastic](https://github.com/scrooloose/syntastic)
-* [VCSCommand](http://http://repo.or.cz/w/vcscommand.git)
-* [Python-mode](https://github.com/klen/python-mode)
 * [Coffee-script](https://github.com/kchmck/vim-coffee-script)
-* [Xterm-Color-Table](https://github.com/guns/xterm-color-table.vim)
 

@@ -1,7 +1,7 @@
 " Description   : Vim Configuration File
 " Author        : Codeb Fan
 " Email         : codeb2cc@gmail.com
-" Last Modified : 2011年12月14日 星期三 18时04分51秒
+" Last Modified : 2011 12 15 - 02:53
 
 " Environment {
     " Basics {
@@ -32,6 +32,17 @@
     set nobackup
     set writebackup
 
+    " Chinese support for gVim
+    if has('gui_running')
+        set encoding=utf-8
+        set fileencoding=utf-8
+        set fileencodings=ucs-bom,utf-8,cp936
+        set langmenu=zh_CN.utf-8
+        source $VIMRUNTIME/delmenu.vim
+        source $VIMRUNTIME/menu.vim
+        language messages zh_CN.utf-8
+    endif
+
     " Force Django template html syntax
     autocmd FileType html :set syntax=htmldjango
 " }
@@ -41,23 +52,19 @@
         let time = eval(strftime("%H"))
         if has('gui_running')
             if time > 18 || time < 6
-                execute "colorscheme molokai"
+                execute "colorscheme xterm16"
             else
-                execute "colorscheme chela_light"
+                execute "colorscheme textmate16"
             endif
         else
-            if time > 18 || time < 6
-                execute "colorscheme molokai"
-            else
-                execute "colorscheme calmar256-dark"
-            endif
+            execute "colorscheme default"
         endif
     " }
 
     " Hide menu and set font
     if has('gui_running')
-        set guioptions-=m
-        set guifont=Envy\ Code\ R\ 11
+        set guioptions-=T
+        set guifont=Envy\ Code\ R:h12
     endif
 
     " Ruler
@@ -104,7 +111,6 @@
 
         " 1st block
         set statusline+=%1*\                    " Color
-        set statusline+=%{SyntasticStatuslineFlag()}    " Syntastic Plugin
       " set statusline+=[%n]                    " Buffer number
         set statusline+=[%P\ %4.l,%3.c]         " Navigation info
         " 2nd block
@@ -125,7 +131,7 @@
       " set statusline+=[HEX:%02.2B]            " Cursor character's Hex value
         " 5th block
         set statusline+=\ %5*\                  " Color
-        set statusline+=[%{strftime(\"%Y/%m/%d\ %T\")}]   " Current data and time
+        set statusline+=[%{strftime(\"%Y/%m/%d\ %X\")}]   " Current data and time
         " End
         set statusline+=\                       " Trailing spaces
     endif
@@ -206,6 +212,7 @@
 " Plugins {
     " Tagbar {
         nmap <F3> :TagbarToggle<CR>
+        let g:tagbar_ctags_bin = "$HOME/vimfiles/ctags.exe"
       " let g:tagbar_left = 1
       " let g:tagbar_width = 30
     " }
@@ -249,23 +256,12 @@
     " }
 
     " YankRing {
-        let g:yankring_history_file = '.yankring_history'
+        let g:yankring_history_dir = "%HOME/vimfiles"
+        let g:yankring_history_file = ".yankring_history"
         let g:yankring_window_height = 6
         nmap <silent> <F10> :YRShow<CR>
     " }
 
-    " Syntastic {
-        let g:syntastic_auto_jump = 1
-        let g:syntastic_mode_map = { 'mode': 'passive',
-                                   \ 'active_filetypes': ['python', 'javascript', 'html'],
-                                   \ 'passive_filetypes': [] }
-        let g:syntastic_stl_format = '[E:%e #fe, W:%w #%fw]'
-        nmap <silent> <F4> :SyntasticCheck<CR>
-    " }
-
-    " Python-mode {
-    let g:pymode_lint_checker = "pyflakes"
-    " }
 " }
 
 " Utilities {
@@ -278,8 +274,8 @@
             let l = line("$")
         endif
         " Search the Last Modified string and renew the date time
-        execute "1," . l . "g/Last Modified : /s/Last Modified : .*/Last Modified : " .
-                    \ strftime("%c")
+        let tag = "Last Modified"
+        execute "1," . l . "g/" . tag . " : /s/" . tag . " : .*/" . tag . " : " . strftime("%Y %m %d - %H:%M")
     endfunction
     nmap <silent> <F7> :call LastMod()<CR>
     " }
