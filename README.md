@@ -20,6 +20,11 @@ Installation
         cd ~/.vim
         git submodule update --init
 
+4. Extra work
+
+        cd ~/.vim/bundle/command-t
+        rake make
+
 Shortcuts
 ---------
 
@@ -52,4 +57,5 @@ Plugins Reference
 * [Python-mode](https://github.com/klen/python-mode)
 * [Coffee-script](https://github.com/kchmck/vim-coffee-script)
 * [Xterm-Color-Table](https://github.com/guns/xterm-color-table.vim)
+* [Command-T](https://wincent.com/products/command-t)
 

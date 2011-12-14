@@ -1,7 +1,7 @@
 " Description   : Vim Configuration File
 " Author        : Codeb Fan
 " Email         : codeb2cc@gmail.com
-" Last Modified : 2011年12月14日 星期三 18时04分51秒
+" Last Modified : 2011 12 15 - 04:31
 
 " Environment {
     " Basics {
@@ -278,8 +278,8 @@
             let l = line("$")
         endif
         " Search the Last Modified string and renew the date time
-        execute "1," . l . "g/Last Modified : /s/Last Modified : .*/Last Modified : " .
-                    \ strftime("%c")
+        let tag = "Last Modified"
+        execute "1," . l . "g/" . tag . " : /s/" . tag . " : .*/" . tag . " : " . strftime("%Y %m %d - %H:%M")
     endfunction
     nmap <silent> <F7> :call LastMod()<CR>
     " }
