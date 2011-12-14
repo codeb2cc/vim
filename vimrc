@@ -1,7 +1,7 @@
 " Description   : Vim Configuration File
 " Author        : Codeb Fan
 " Email         : codeb2cc@gmail.com
-" Last Modified : 2011年12月14日 星期三 05时45分30秒
+" Last Modified : 2011年12月14日 星期三 18时04分51秒
 
 " Environment {
     " Basics {
@@ -32,14 +32,6 @@
     set nobackup
     set writebackup
 
-    " Chinese support for gVim(Windows)
-    set encoding=utf-8
-    set fileencodings=utf-8,cp936
-    set langmenu=zh_CN.utf-8
-    source $VIMRUNTIME/delmenu.vim
-    source $VIMRUNTIME/menu.vim
-    language messages zh_CN.utf-8
-
     " Force Django template html syntax
     autocmd FileType html :set syntax=htmldjango
 " }
@@ -62,13 +54,11 @@
         endif
     " }
 
-    " Hide menu and buttons
+    " Hide menu and set font
     if has('gui_running')
         set guioptions-=m
+        set guifont=Envy\ Code\ R\ 11
     endif
-
-    " Font
-    set guifont=Inconsolata\ 11
 
     " Ruler
     if has('cmdline_info')
@@ -259,11 +249,6 @@
     " }
 
     " YankRing {
-        if has('win32') || has('win64')
-            let g:yankring_history_dir  = '$HOME/vimfiles'
-        else
-            let g:yankring_history_dir  = '$HOME/.vim'
-        endif
         let g:yankring_history_file = '.yankring_history'
         let g:yankring_window_height = 6
         nmap <silent> <F10> :YRShow<CR>
