@@ -210,7 +210,7 @@
     nnoremap k gk
 
     " Clear highlighted search
-    nmap <F8> :nohlsearch<CR>
+    nmap <silent> <F8> :nohlsearch<CR>
 " }
 
 " Plugins {
@@ -243,7 +243,7 @@
         let NERDTreeQuitOnOpen    = 1
         let NERDTreeShowHidden    = 1
 
-        nmap <F2> :NERDTreeToggle<CR>
+        nmap <silent> <F2> :NERDTreeToggle<CR>
         nmap <Leader>ae :NERDTreeToggle<CR>
     " }
 
@@ -252,7 +252,7 @@
     " }
 
     " MiniBufExplorer {
-        nmap <F9> :TMiniBufExplorer<CR>
+        nmap <silent> <F9> :TMiniBufExplorer<CR>
       " let g:miniBufExplMapWindowNavVim = 1
       let g:miniBufExplCheckDupeBufs = 0
       " let g:statusLineText =
@@ -266,7 +266,7 @@
         endif
         let g:yankring_history_file = '.yankring_history'
         let g:yankring_window_height = 6
-        nmap <F10> :YRShow<CR>
+        nmap <silent> <F10> :YRShow<CR>
     " }
 
     " Syntastic {
@@ -275,7 +275,7 @@
                                    \ 'active_filetypes': ['python', 'javascript', 'html'],
                                    \ 'passive_filetypes': [] }
         let g:syntastic_stl_format = '[E:%e #fe, W:%w #%fw]'
-        nmap <F11> :SyntasticCheck<CR>
+        nmap <silent> <F4> :SyntasticCheck<CR>
     " }
 
     " Python-mode {
@@ -296,13 +296,13 @@
         execute "1," . l . "g/Last Modified : /s/Last Modified : .*/Last Modified : " .
                     \ strftime("%c")
     endfunction
-    nmap <F7> :call LastMod()<CR>
+    nmap <silent> <F7> :call LastMod()<CR>
     " }
 
     " Quick sign {
         sign define information text=!> linehl=warning texthl=error
-        map <F5> :exe ":sign place 7 line=" .line(".") ." name=information file=" . expand("%:p")<CR>
-        map <F6> :sign unplace<CR>
+        map <silent> <F5> :exe ":sign place 7 line=" .line(".") ." name=information file=" . expand("%:p")<CR>
+        map <silent> <F6> :sign unplace<CR>
     " }
 
     " File size {

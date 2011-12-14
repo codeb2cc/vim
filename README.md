@@ -32,14 +32,13 @@ SHORTCUTS
 
 * `F2`: NERDTree window
 * `F3`: Tagbar window
-* `F4`:
+* `F4`: Syntastic check
 * `F5`: Place a sign on current line
 * `F6`: Remove a sign on current line
 * `F7`: Update the 'Last Modified' string
 * `F8`: shortcut of `:nohlsearch<CR>`
 * `F9`: miniBufExpl window
 * `F10`: YankRing window
-* `F11`: Syntastic check
 
 For more detail, just look into the vimrc file.
 
