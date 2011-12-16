@@ -1,7 +1,7 @@
 " Description   : Vim Configuration File
 " Author        : Codeb Fan
 " Email         : codeb2cc@gmail.com
-" Last Modified : 2011 12 15 - 04:31
+" Last Modified : 2011 12 16 - 13:26
 
 " Environment {
     " Basics {
@@ -219,7 +219,7 @@
 
         let delimitMate_expand_space = 1
         let delimitMate_balance_matchpairs = 1
-        let delimitMate_excluded_regions = "Comments,String"
+        let delimitMate_excluded_regions = "Comments"
     " }
 
     " Surround {
