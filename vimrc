@@ -179,10 +179,12 @@
     map <C-Up> <C-W>k
     map <C-Left> <C-W>h
     map <C-Right> <C-W>l
+    map <C-H> <C-W>h
+    map <C-L> <C-W>l
 
     " Moving in buffers
-    map <C-H> :bp<CR>
-    map <C-L> :bn<CR>
+    map <C-J> :bp<CR>
+    map <C-K> :bn<CR>
 
     " Completion
     inoremap <C-O> <C-X><C-O>
