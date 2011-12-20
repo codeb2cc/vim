@@ -182,7 +182,7 @@
     map <C-H> <C-W>h
     map <C-L> <C-W>l
 
-    " Moving in buffers
+    " Moving between buffers
     map <C-J> :bp<CR>
     map <C-K> :bn<CR>
 
@@ -243,11 +243,9 @@
        let NERDSpaceDelims = 1
     " }
 
-    " MiniBufExplorer {
-        nmap <silent> <F9> :TMiniBufExplorer<CR>
-      " let g:miniBufExplMapWindowNavVim = 1
-      let g:miniBufExplCheckDupeBufs = 0
-      " let g:statusLineText =
+    " Bufexplorer {
+        nmap <silent> <F9> :BufExplorer<CR>
+        let g:bufExplorerShowTabBuffer = 1
     " }
 
     " YankRing {
