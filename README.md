@@ -20,7 +20,7 @@ Installation
         cd ~/.vim
         git submodule update --init
 
-4. Extra work
+4. Extra work for command-t plugin
 
         cd ~/.vim/bundle/command-t
         rake make
@@ -35,7 +35,7 @@ Shortcuts
 * `F6`: Remove a sign on current line
 * `F7`: Update the 'Last Modified' string
 * `F8`: shortcut of `:nohlsearch<CR>`
-* `F9`: miniBufExpl window
+* `F9`: Bufexplorer window
 * `F10`: YankRing window
 
 For more detail, just look into the vimrc file.
