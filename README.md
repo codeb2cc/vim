@@ -5,7 +5,7 @@ Author: codeb2cc
 Email: codeb2cc{at}gmail.com
 
 Installation
---------------------
+------------
 Using Git Bash:
 
 1. Check out
@@ -41,6 +41,7 @@ Plugins Reference
 
 * [Pathogen](https://github.com/tpope/vim-pathogen)
 * [miniBufExpl](https://github.com/fholgado/minibufexpl.vim)
+* [Bufexplorer](http://www.vim.org/scripts/script.php?script_id=42)
 * [Tagbar](https://github.com/majutsushi/tagbar)
 * [NERDTree](https://github.com/scrooloose/nerdtree)
 * [NERDCommenter](https://github.com/scrooloose/nerdcommenter)

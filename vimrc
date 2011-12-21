@@ -1,7 +1,7 @@
 " Description   : Vim Configuration File
 " Author        : Codeb Fan
 " Email         : codeb2cc@gmail.com
-" Last Modified : 2011 12 15 - 02:53
+" Last Modified : 2011 12 21 - 12:15
 
 " Environment {
     " Basics {
@@ -185,10 +185,12 @@
     map <C-Up> <C-W>k
     map <C-Left> <C-W>h
     map <C-Right> <C-W>l
+    map <C-H> <C-W>h
+    map <C-L> <C-w>l
 
     " Moving in buffers
-    map <C-H> :bp<CR>
-    map <C-L> :bn<CR>
+    map <C-J> :bp<CR>
+    map <C-K> :bn<CR>
 
     " Completion
     inoremap <C-O> <C-X><C-O>
@@ -248,11 +250,9 @@
        let NERDSpaceDelims = 1
     " }
 
-    " MiniBufExplorer {
-        nmap <silent> <F9> :TMiniBufExplorer<CR>
-      " let g:miniBufExplMapWindowNavVim = 1
-      let g:miniBufExplCheckDupeBufs = 0
-      " let g:statusLineText =
+    " Bufexplorer {
+        nmap <silent> <F9> :BufExplorer<CR>
+        let g:bufExplorerShowTabBuffer = 1
     " }
 
     " YankRing {
