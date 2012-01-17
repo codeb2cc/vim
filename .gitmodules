@@ -43,3 +43,6 @@
 [submodule "bundle/bufexplorer"]
 	path = bundle/bufexplorer
 	url = git://github.com/vim-scripts/bufexplorer.zip.git
+[submodule "bundle/vim-jade"]
+	path = bundle/vim-jade
+	url = https://github.com/digitaltoad/vim-jade.git

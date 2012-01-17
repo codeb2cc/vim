@@ -59,3 +59,4 @@ Plugins Reference
 * [Xterm-Color-Table](https://github.com/guns/xterm-color-table.vim)
 * [Command-T](https://wincent.com/products/command-t)
 * [VimWiki](http://code.google.com/p/vimwiki)
+* [Vim-Jade](https://github.com/digitaltoad/vim-jade.git)

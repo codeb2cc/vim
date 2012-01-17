@@ -1,7 +1,7 @@
 " Description   : Vim Configuration File
 " Author        : Codeb Fan
 " Email         : codeb2cc@gmail.com
-" Last Modified : 2011 12 16 - 13:26
+" Last Modified : 2012 01 18 - 02:16
 
 " Environment {
     " Basics {
@@ -33,7 +33,7 @@
     set writebackup
 
     " Force Django template html syntax
-    autocmd FileType html :set syntax=htmldjango
+  " autocmd FileType html :set syntax=htmldjango
 " }
 
 " UI {
@@ -47,17 +47,19 @@
             endif
         else
             if time > 18 || time < 6
-                execute "colorscheme molokai"
+                execute "colorscheme xterm16"
             else
-                execute "colorscheme calmar256-dark"
+                execute "colorscheme molokai"
             endif
+            " To enable terminal transparent effect
+            execute "colorscheme default"
         endif
     " }
 
     " Hide menu and set font
     if has('gui_running')
         set guioptions-=m
-        set guifont=Envy\ Code\ R\ 11
+        set guifont=Envy\ Code\ R\ 13
     endif
 
     " Ruler
@@ -264,6 +266,7 @@
     " }
 
     " Python-mode {
+        let g:pymode_lint_write = 0
         let g:pymode_lint_checker = "pyflakes"
     " }
 
