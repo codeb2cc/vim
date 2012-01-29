@@ -1,7 +1,7 @@
 " Description   : Vim Configuration File
 " Author        : Codeb Fan
 " Email         : codeb2cc@gmail.com
-" Last Modified : 2012 01 18 - 02:16
+" Last Modified : 2012 01 29 - 16:42
 
 " Environment {
     " Basics {
@@ -19,7 +19,7 @@
 " General {
   " set mouse=a         " Automatically enable mouse usage
     syntax on           " Syntax highlight
-    scriptencoding utf-8
+    scriptencoding UTF-8
     set viewoptions=folds,options,cursor,unix,slash     " Better Uinx/Windows compatibility
     set history=40      " Command-line history number
   " set spell           " Spell checking
@@ -212,18 +212,6 @@
         nmap <F3> :TagbarToggle<CR>
       " let g:tagbar_left = 1
       " let g:tagbar_width = 30
-    " }
-
-    " Delimitmate {
-        set timeout
-        autocmd FileType * let b:delimitMate_autoclose = 1
-
-        " If using html auto complete (complete closing tag)
-        autocmd FileType xml,html,xhtml let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
-
-        let delimitMate_expand_space = 1
-        let delimitMate_balance_matchpairs = 1
-        let delimitMate_excluded_regions = "Comments"
     " }
 
     " Surround {

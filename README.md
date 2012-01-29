@@ -51,7 +51,6 @@ Plugins Reference
 * [YankRing](https://github.com/vim-scripts/YankRing.vim)
 * [SuperTab](https://github.com/ervandew/supertab)
 * [Surround](https://github.com/tpope/vim-surround)
-* [delimitMate](https://github.com/Raimondi/delimitMate)
 * [Syntastic](https://github.com/scrooloose/syntastic)
 * [VCSCommand](http://http://repo.or.cz/w/vcscommand.git)
 * [Python-mode](https://github.com/klen/python-mode)
