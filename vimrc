@@ -51,8 +51,6 @@
             else
                 execute "colorscheme molokai"
             endif
-            " To enable terminal transparent effect
-            execute "colorscheme default"
         endif
     " }
 
@@ -210,6 +208,7 @@
 " Plugins {
     " Tagbar {
         nmap <F3> :TagbarToggle<CR>
+        let g:tagbar_autoclose = 0
       " let g:tagbar_left = 1
       " let g:tagbar_width = 30
     " }
@@ -222,7 +221,7 @@
 
     " NerdTree {
         let NERDTreeShowBookmarks = 1
-        let NERDTreeQuitOnOpen    = 1
+        let NERDTreeQuitOnOpen    = 0
         let NERDTreeShowHidden    = 1
 
         nmap <silent> <F2> :NERDTreeToggle<CR>
