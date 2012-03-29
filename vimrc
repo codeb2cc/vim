@@ -151,20 +151,6 @@
     set listchars=tab:>.,trail:+,extends:#,nbsp:.       " Highlight problematic whitespace
 " }
 
-" Formatting {
-    set wrap            " Wrap long lines
-    set expandtab       " Use spaces instead of tabs
-    set shiftwidth=4    " Use indents of 4 spaces
-    set softtabstop=4   " Number of spaces in editing operation
-    set tabstop=4       " Indentation length
-    set autoindent      " Indent at the same level of the previous line
-
-    " File type specific setting is in the after/ftplugin folder
-
-    " Remove trailing white spaces and ^M chars
-    autocmd FileType c,cpp,java,php,js,python autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
-" }
-
 " Template {
     autocmd BufNewFile *.html    0r ~/.vim/template/template.html
     autocmd BufNewFile *.py    0r ~/.vim/template/template.py
@@ -303,4 +289,19 @@
     endfunction
     " }
 " }
+
+" Formatting {
+    set wrap            " Wrap long lines
+    set expandtab       " Use spaces instead of tabs
+    set shiftwidth=4    " Use indents of 4 spaces
+    set softtabstop=4   " Number of spaces in editing operation
+    set tabstop=4       " Indentation length
+    set autoindent      " Indent at the same level of the previous line
+
+    " File type specific setting is in the after/ftplugin folder
+
+    " Remove trailing white spaces and ^M chars
+    autocmd FileType c,cpp,java,php,js,python autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+" }
+
 
