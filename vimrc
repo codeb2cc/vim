@@ -57,7 +57,7 @@
     " Hide menu and set font
     if has('gui_running')
         set guioptions-=m
-        set guifont=Envy\ Code\ R\ 13
+        set guifont=inconsolata\ 13
     endif
 
     " Ruler
@@ -263,10 +263,11 @@
             let l = line("$")
         endif
         " Search the Last Modified string and renew the date time
-        let tag = "Last Modified"
-        execute "1," . l . "g/" . tag . " : /s/" . tag . " : .*/" . tag . " : " . strftime("%Y %m %d - %H:%M")
+        let tag = "Last Change"
+        execute "1," . l . "g/" . tag . ": /s/" . tag . ": .*/" . tag . ": " . strftime("%Y-%m-%d %H:%M")
     endfunction
     nmap <silent> <F7> :call LastMod()<CR>
+    autocmd BufWritePre <buffer> :call LastMod()
     " }
 
     " Quick sign {
