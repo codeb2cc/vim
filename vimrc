@@ -238,6 +238,7 @@
                                    \ 'passive_filetypes': [] }
         let g:syntastic_stl_format = '[E:%e #fe, W:%w #%fw]'
         nmap <silent> <F4> :SyntasticCheck<CR>
+        let g:syntastic_javascript_jshint_conf = "--lastsemic"
     " }
 
     " Python-mode {
