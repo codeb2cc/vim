@@ -25,6 +25,10 @@ Installation
         cd ~/.vim/bundle/command-t
         rake make
 
+5. The way to update plugins
+
+        git submodule foreach git pull origin master
+
 Shortcuts
 ---------
 
