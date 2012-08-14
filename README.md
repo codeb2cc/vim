@@ -49,6 +49,7 @@ Plugins Reference
 * [NERDTree](https://github.com/scrooloose/nerdtree)
 * [NERDCommenter](https://github.com/scrooloose/nerdcommenter)
 * [YankRing](https://github.com/vim-scripts/YankRing.vim)
+* [Matchit](https://github.com/vim-scripts/matchit.zip)
 * [SuperTab](https://github.com/ervandew/supertab)
 * [Surround](https://github.com/tpope/vim-surround)
 * [Syntastic](https://github.com/scrooloose/syntastic)
