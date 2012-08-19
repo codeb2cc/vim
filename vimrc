@@ -268,7 +268,7 @@
         execute "1," . l . "g/" . tag . ": /s/" . tag . ": .*/" . tag . ": " . strftime("%Y-%m-%d %H:%M")
     endfunction
     nmap <silent> <F7> :call LastMod()<CR>
-    autocmd BufWritePre <buffer> :call LastMod()
+    autocmd BufWritePre * :call LastMod()
     " }
 
     " Quick sign {
