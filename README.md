@@ -48,6 +48,7 @@ Plugins Reference
 -----------------
 
 * [Pathogen](https://github.com/tpope/vim-pathogen)
+* [Align](https://github.com/vim-scripts/Align)
 * [Bufexplorer](http://www.vim.org/scripts/script.php?script_id=42)
 * [Tagbar](https://github.com/majutsushi/tagbar)
 * [NERDTree](https://github.com/scrooloose/nerdtree)
