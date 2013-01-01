@@ -245,13 +245,6 @@
         let g:pymode_lint_write = 0
         let g:pymode_lint_checker = "pyflakes"
     " }
-
-    " VimWiki {
-        let wiki_default = {}
-        let wiki_default.path = '~/Wiki/wiki/'
-        let wiki_default.path_html = '~/Wiki/html/'
-        let g:vimwiki_list = [ wiki_default ]
-    " }
 " }
 
 " Utilities {

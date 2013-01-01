@@ -20,12 +20,7 @@ Installation
         cd ~/.vim
         git submodule update --init
 
-4. Extra work for command-t plugin
-
-        cd ~/.vim/bundle/command-t
-        rake make
-
-5. The way to update plugins
+4. The way to update plugins
 
         git submodule foreach git pull origin master
 
@@ -62,7 +57,5 @@ Plugins Reference
 * [Python-mode](https://github.com/klen/python-mode)
 * [Coffee-script](https://github.com/kchmck/vim-coffee-script)
 * [Xterm-Color-Table](https://github.com/guns/xterm-color-table.vim)
-* [Command-T](https://wincent.com/products/command-t)
-* [VimWiki](http://code.google.com/p/vimwiki)
-* [Vim-Jade](https://github.com/digitaltoad/vim-jade.git)
-* [ack.vim](https://git://github.com/mileszs/ack.vim.git)
+* [ack.vim](https://github.com/mileszs/ack.vim)
+* [ctrlp](https://kien.github.com/ctrlp.vim)
