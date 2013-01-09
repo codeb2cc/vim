@@ -228,6 +228,7 @@
     " YankRing {
         let g:yankring_history_file = '.yankring_history'
         let g:yankring_window_height = 6
+        let g:yankring_replace_n_pkey = ''
         nmap <silent> <F10> :YRShow<CR>
     " }
 
@@ -244,6 +245,9 @@
     " Python-mode {
         let g:pymode_lint_write = 0
         let g:pymode_lint_checker = "pyflakes"
+    " }
+
+    " Ctrlp {
     " }
 " }
 
