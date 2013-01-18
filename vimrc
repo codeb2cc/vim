@@ -131,6 +131,7 @@
     endif
 
     set cursorline          " Highlight current line
+    set cursorcolumn
     set backspace=indent,eol,start
     set whichwrap+=<,>,h,l  " Backspace and cursor keys wrap to
     set linespace=0         " No extra space between rows
