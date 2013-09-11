@@ -59,4 +59,4 @@ Plugins Reference
 * [Xterm-Color-Table](https://github.com/guns/xterm-color-table.vim)
 * [ack.vim](https://github.com/mileszs/ack.vim)
 * [ctrlp](https://kien.github.com/ctrlp.vim)
-* [vim-less](https://github.com/KohPoll/vim-less)
+* [vim-less](https://github.com/groenewege/vim-less)
