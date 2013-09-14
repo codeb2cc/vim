@@ -253,22 +253,6 @@
 " }
 
 " Utilities {
-    " Last modified tag {
-    function LastMod()
-        " Search the first 10 lines
-        if line("$") > 10
-            let l = 10
-        else
-            let l = line("$")
-        endif
-        " Search the Last Modified string and renew the date time
-        let tag = "Last Change"
-        execute "1," . l . "g/" . tag . ": /s/" . tag . ": .*/" . tag . ": " . strftime("%Y-%m-%d %H:%M")
-    endfunction
-    nmap <silent> <F7> :call LastMod()<CR>
-    autocmd BufWritePre * :call LastMod()
-    " }
-
     " Quick sign {
         sign define information text=!> linehl=warning texthl=error
         map <silent> <F5> :exe ":sign place 7 line=" .line(".") ." name=information file=" . expand("%:p")<CR>
