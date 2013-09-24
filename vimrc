@@ -1,7 +1,6 @@
 " Description   : Vim Configuration File
 " Author        : Codeb Fan
 " Email         : codeb2cc@gmail.com
-" Last Modified : 2012 01 29 - 16:42
 
 " Environment {
     " Basics {
@@ -67,67 +66,9 @@
         set showcmd
     endif
 
-    " Custom highlight group
-        " color eyes {
-        "  hi User1 ctermfg=15  ctermbg=161  guifg=#ffffff guibg=#d92534
-        "  hi User2 ctermfg=233 ctermbg=252  guifg=#121212 guibg=#e4eaf2
-        "  hi User3 ctermfg=15  ctermbg=31   guifg=#ffffff guibg=#75bfbf
-        "  hi User4 ctermfg=15  ctermbg=100  guifg=#ffffff guibg=#babf21
-        "  hi User5 ctermfg=15  ctermbg=202  guifg=#ffffff guibg=#f25d27
-        " }
-        " limekiln {
-        "   hi User1 ctermfg=15  ctermbg=25   guifg=#ffffff guibg=#0084b0
-        "   hi User2 ctermfg=15  ctermbg=30   guifg=#ffffff guibg=#009694
-        "   hi User3 ctermfg=15  ctermbg=35   guifg=#ffffff guibg=#35ab57
-        "   hi User4 ctermfg=15  ctermbg=106  guifg=#ffffff guibg=#8ab833
-        "   hi User5 ctermfg=15  ctermbg=148  guifg=#ffffff guibg=#c0cf3a
-        " }
-        " ctfi {
-            hi User1 ctermfg=15  ctermbg=37   guifg=#ffffff guibg=#03acb1
-            hi User2 ctermfg=15  ctermbg=30   guifg=#ffffff guibg=#028785
-            hi User3 ctermfg=15  ctermbg=35   guifg=#ffffff guibg=#04b15e
-            hi User4 ctermfg=15  ctermbg=70   guifg=#ffffff guibg=#83b901
-            hi User5 ctermfg=15  ctermbg=214  guifg=#ffffff guibg=#fd8300
-        " }
-        " ikea {
-        "   hi User1 ctermfg=15  ctermbg=0    guifg=#ffffff guibg=#040404
-        "   hi User2 ctermfg=15  ctermbg=106  guifg=#ffffff guibg=#98bf0b
-        "   hi User3 ctermfg=15  ctermbg=244  guifg=#ffffff guibg=#41443d
-        "   hi User4 ctermfg=233 ctermbg=253  guifg=#121212 guibg=#dcdcdc
-        "   hi User5 ctermfg=15  ctermbg=130  guifg=#ffffff guibg=#a67951
-        " }
-
     " Status Line
     if has('statusline')
         set laststatus=2        " Always show
-        set statusline=         " Reset StatusLine
-
-        " 1st block
-        set statusline+=%1*\                    " Color
-        set statusline+=%{SyntasticStatuslineFlag()}    " Syntastic Plugin
-      " set statusline+=[%n]                    " Buffer number
-        set statusline+=[%P\ %4.l,%3.c]         " Navigation info
-        " 2nd block
-        set statusline+=\ %2*\                  " Color
-        set statusline+=[%<%.36(%{getcwd()}%)]  " Current directory
-        " 3rd block
-        set statusline+=\ %3*\                  " Color
-        set statusline+=%=                      " Right aligned items begin
-        set statusline+=[%1.(%M%)]              " Modified flag
-        set statusline+=%.([%t]%r%h%w%)         " File name
-        " 4th block
-        set statusline+=\ %4*\                          " Color
-      " set statusline+=[%{FileSize()}]                 " File size
-        set statusline+=[%{strlen(&ft)?&ft:'none'}]     " File type
-        set statusline+=[%{strlen(&fenc)?&fenc:&enc}]   " Encoding
-      " set statusline+=[%{&fileformat}]                " File format
-      " set statusline+=[ASCII:%03.3b]          " Cursor character's ASCII code
-      " set statusline+=[HEX:%02.2B]            " Cursor character's Hex value
-        " 5th block
-        set statusline+=\ %5*\                  " Color
-        set statusline+=[%{strftime(\"%Y/%m/%d\ %T\")}]   " Current data and time
-        " End
-        set statusline+=\                       " Trailing spaces
     endif
 
     set cursorline          " Highlight current line
@@ -249,6 +190,11 @@
     " }
 
     " Ctrlp {
+    " }
+
+    " Airline {
+        let g:airline#extensions#tabline#enabled = 1
+        let g:airline_powerline_fonts = 1
     " }
 " }
 
