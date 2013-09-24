@@ -53,8 +53,6 @@ Plugins Reference
 * [SuperTab](https://github.com/ervandew/supertab)
 * [Surround](https://github.com/tpope/vim-surround)
 * [Syntastic](https://github.com/scrooloose/syntastic)
-* [VCSCommand](http://http://repo.or.cz/w/vcscommand.git)
-* [Python-mode](https://github.com/klen/python-mode)
 * [Coffee-script](https://github.com/kchmck/vim-coffee-script)
 * [Xterm-Color-Table](https://github.com/guns/xterm-color-table.vim)
 * [ack.vim](https://github.com/mileszs/ack.vim)

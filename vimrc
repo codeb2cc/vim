@@ -176,17 +176,15 @@
 
     " Syntastic {
         let g:syntastic_auto_jump = 1
+        let g:syntastic_auto_loc_list = 1
         let g:syntastic_mode_map = { 'mode': 'passive',
                                    \ 'active_filetypes': ['python', 'javascript', 'html'],
                                    \ 'passive_filetypes': [] }
-        let g:syntastic_stl_format = '[E:%e #fe, W:%w #%fw]'
+        let g:syntastic_stl_format = '[E:%e %fe, W:%w #%fw]'
         nmap <silent> <F4> :SyntasticCheck<CR>
+        let g:syntastic_python_checkers = ['flake8']
+        let g:syntastic_python_flake8_args = "--max-line-length 120 --ignore E203,E226,E241,E242,W391"
         let g:syntastic_javascript_jshint_conf = "--lastsemic"
-    " }
-
-    " Python-mode {
-        let g:pymode_lint_write = 0
-        let g:pymode_lint_checker = "pyflakes"
     " }
 
     " Ctrlp {
