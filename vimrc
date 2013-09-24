@@ -253,12 +253,6 @@
 " }
 
 " Utilities {
-    " Quick sign {
-        sign define information text=!> linehl=warning texthl=error
-        map <silent> <F5> :exe ":sign place 7 line=" .line(".") ." name=information file=" . expand("%:p")<CR>
-        map <silent> <F6> :sign unplace<CR>
-    " }
-
     " File size {
     function  FileSize()
         let bytes = getfsize(expand("%:p"))
