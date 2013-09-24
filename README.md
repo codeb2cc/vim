@@ -27,14 +27,14 @@ Installation
 Shortcuts
 ---------
 
-* `F2`: NERDTree window
-* `F3`: Tagbar window
-* `F4`: Syntastic check
-* `F5`: Place a sign on current line
-* `F6`: Remove a sign on current line
-* `F7`: Update the 'Last Modified' string
-* `F8`: shortcut of `:nohlsearch<CR>`
-* `F9`: Bufexplorer window
+* `F2` : NERDTree window
+* `F3` : Tagbar window
+* `F4` : Syntastic check
+* `F5` :
+* `F6` :
+* `F7` :
+* `F8` : shortcut of `:nohlsearch<CR>`
+* `F9` : Bufexplorer window
 * `F10`: YankRing window
 
 For more detail, just look into the vimrc file.
@@ -60,3 +60,7 @@ Plugins Reference
 * [ack.vim](https://github.com/mileszs/ack.vim)
 * [ctrlp](https://kien.github.com/ctrlp.vim)
 * [vim-less](https://github.com/groenewege/vim-less)
+* [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
+* [vim-unimpaired](https://github.com/tpope/vim-unimpaired)
+* [vim-fugitive](https://github.com/tpope/vim-fugitive/)
+
