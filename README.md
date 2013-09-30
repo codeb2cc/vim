@@ -61,4 +61,4 @@ Plugins Reference
 * [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
 * [vim-unimpaired](https://github.com/tpope/vim-unimpaired)
 * [vim-fugitive](https://github.com/tpope/vim-fugitive/)
-
+* [vim-golang](https://github.com/jnwhiteh/vim-golang.git)
