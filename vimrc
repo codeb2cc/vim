@@ -95,7 +95,8 @@
 
 " Template {
     autocmd BufNewFile *.html    0r ~/.vim/template/template.html
-    autocmd BufNewFile *.py    0r ~/.vim/template/template.py
+    autocmd BufNewFile *.py      0r ~/.vim/template/template.py
+    autocmd BufNewFile *.js      0r ~/.vim/template/template.js
 " }
 
 " Key Mappings {
@@ -103,18 +104,14 @@
     let mapleader = ','
 
     " Moving in tabs and windows
-    map <C-Down> <C-W>j
-    map <C-Up> <C-W>k
-    map <C-Left> <C-W>h
-    map <C-Right> <C-W>l
     map <C-J> <C-W>j
     map <C-K> <C-W>k
     map <C-H> <C-W>h
     map <C-L> <C-W>l
 
     " Moving between buffers
-    " map <C-J> :bp<CR>
     " map <C-K> :bn<CR>
+    " map <C-J> :bp<CR>
 
     " Completion
     inoremap <C-O> <C-X><C-O>
@@ -176,6 +173,7 @@
 
     " Syntastic {
         let g:syntastic_auto_jump = 1
+        " let g:syntastic_quiet_warnings = 1
         let g:syntastic_auto_loc_list = 1
         let g:syntastic_mode_map = { 'mode': 'passive',
                                    \ 'active_filetypes': ['python', 'javascript', 'html'],
@@ -184,10 +182,14 @@
         nmap <silent> <F4> :SyntasticCheck<CR>
         let g:syntastic_python_checkers = ['flake8']
         let g:syntastic_python_flake8_args = "--max-line-length 120 --ignore E203,E226,E241,E242,W391"
-        let g:syntastic_javascript_jshint_conf = "--lastsemic"
+        let g:syntastic_javascript_checkers = ['jshint']
     " }
 
     " Ctrlp {
+        let g:ctrlp_clear_cache_on_exit = 0
+        let g:ctrlp_custom_ignore = {
+                    \ 'dir': '\v[\/](.git|.hg|.svn|node_modules)$',
+                    \ }
     " }
 
     " Airline {
