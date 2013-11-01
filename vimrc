@@ -110,8 +110,8 @@
     map <C-L> <C-W>l
 
     " Moving between buffers
-    " map <C-K> :bn<CR>
-    " map <C-J> :bp<CR>
+    map <C-B><C-N> :bn<CR>
+    map <C-B><C-P> :bp<CR>
 
     " Completion
     inoremap <C-O> <C-X><C-O>
