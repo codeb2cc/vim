@@ -15,14 +15,9 @@ Installation
 
         ln -s ~/.vim/vimrc ~/.vimrc
 
-3. Fetch vim plugins
+3. Hava fun
 
-        cd ~/.vim
-        git submodule update --init
-
-4. The way to update plugins
-
-        git submodule foreach git pull origin master
+        vim
 
 Shortcuts
 ---------
@@ -39,27 +34,37 @@ Shortcuts
 
 For more detail, just look into the vimrc file.
 
-Plugins Reference
------------------
 
-* [Pathogen](https://github.com/tpope/vim-pathogen)
-* [Align](https://github.com/vim-scripts/Align)
-* [Bufexplorer](http://www.vim.org/scripts/script.php?script_id=42)
-* [Tagbar](https://github.com/majutsushi/tagbar)
-* [NERDTree](https://github.com/scrooloose/nerdtree)
-* [NERDCommenter](https://github.com/scrooloose/nerdcommenter)
-* [YankRing](https://github.com/vim-scripts/YankRing.vim)
-* [Matchit](https://github.com/vim-scripts/matchit.zip)
-* [SuperTab](https://github.com/ervandew/supertab)
-* [Surround](https://github.com/tpope/vim-surround)
-* [Syntastic](https://github.com/scrooloose/syntastic)
-* [Coffee-script](https://github.com/kchmck/vim-coffee-script)
-* [Xterm-Color-Table](https://github.com/guns/xterm-color-table.vim)
-* [ack.vim](https://github.com/mileszs/ack.vim)
-* [ctrlp](https://kien.github.com/ctrlp.vim)
-* [vim-less](https://github.com/groenewege/vim-less)
-* [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
-* [vim-unimpaired](https://github.com/tpope/vim-unimpaired)
-* [vim-fugitive](https://github.com/tpope/vim-fugitive/)
-* [vim-golang](https://github.com/jnwhiteh/vim-golang)
-* [emmet-vim](https://github.com/mattn/emmet-vim)
+Plugins Upgrade
+---------------
+
+As I've replaced `submodule` with `subtree` to manage bundle plugins, there's no one-step upgrade
+any more. From now on, use the `subtree pull` command instead:
+
+      git subtree pull --prefix bundle/ack https://github.com/mileszs/ack.vim.git master --squash
+
+
+References:
+
+* `bundle/ack` : https://github.com/mileszs/ack.vim.git
+* `bundle/align` : https://github.com/vim-scripts/Align.git
+* `bundle/bufexplorer` : https://github.com/vim-scripts/bufexplorer.zip.git
+* `bundle/coffee-script` : https://github.com/kchmck/vim-coffee-script.git
+* `bundle/ctrlp` : https://github.com/kien/ctrlp.vim.git
+* `bundle/emmet-vim` : url = https://github.com/mattn/emmet-vim.git
+* `bundle/matchit` : https://github.com/vim-scripts/matchit.zip.git
+* `bundle/nerdcommenter` : https://github.com/scrooloose/nerdcommenter.git
+* `bundle/nerdtree` : https://github.com/scrooloose/nerdtree.git
+* `bundle/supertab` : https://github.com/ervandew/supertab.git
+* `bundle/surround` : https://github.com/tpope/vim-surround.git
+* `bundle/syntastic` : https://github.com/scrooloose/syntastic.git
+* `bundle/tagbar` : https://github.com/majutsushi/tagbar.git
+* `bundle/vim-airline` : https://github.com/bling/vim-airline.git
+* `bundle/vim-fugitive` : https://github.com/tpope/vim-fugitive.git
+* `bundle/vim-gitgutter` : https://github.com/airblade/vim-gitgutter.git
+* `bundle/vim-golang` : https://github.com/jnwhiteh/vim-golang.git
+* `bundle/vim-less` : https://github.com/groenewege/vim-less.git
+* `bundle/vim-unimpaired` : https://github.com/tpope/vim-unimpaired.git
+* `bundle/xterm-color-table` : https://github.com/guns/xterm-color-table.vim.git
+* `bundle/yankring` : https://github.com/vim-scripts/YankRing.vim.git
+
