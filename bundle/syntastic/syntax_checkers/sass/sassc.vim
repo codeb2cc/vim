@@ -1,7 +1,7 @@
 "============================================================================
-"File:        ycm.vim
-"Description: Syntax checking plugin for syntastic.vim
-"Maintainer:  Val Markovic <val at markovic dot io>
+"File:        sassc.vim
+"Description: Syntax checking plugin for syntastic
+"Maintainer:  LCD 47 <lcd047 at gmail dot com>
 "License:     This program is free software. It comes without any warranty,
 "             to the extent permitted by applicable law. You can redistribute
 "             it and/or modify it under the terms of the Do What The Fuck You
@@ -10,25 +10,29 @@
 "
 "============================================================================
 
-if exists("g:loaded_syntastic_c_ycm_checker")
+if exists("g:loaded_syntastic_sass_sassc_checker")
     finish
 endif
-let g:loaded_syntastic_c_ycm_checker = 1
+let g:loaded_syntastic_sass_sassc_checker = 1
 
-function! SyntaxCheckers_c_ycm_IsAvailable() dict
-    return exists('g:loaded_youcompleteme')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-if !exists('g:loaded_youcompleteme')
-    finish
-endif
+function! SyntaxCheckers_sass_sassc_GetLocList() dict
+    let makeprg = self.makeprgBuild({ 'fname_after': syntastic#util#DevNull() })
 
-function! SyntaxCheckers_c_ycm_GetLocList() dict
-    return youcompleteme#CurrentFileDiagnostics()
+    let errorformat = '%f:%l: %trror: %m'
+
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
-    \ 'filetype': 'c',
-    \ 'name': 'ycm'})
+    \ 'filetype': 'sass',
+    \ 'name': 'sassc'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
 
 " vim: set et sts=4 sw=4:

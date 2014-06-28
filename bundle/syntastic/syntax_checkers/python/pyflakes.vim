@@ -40,11 +40,13 @@ function! SyntaxCheckers_python_pyflakes_GetHighlightRegex(i)
 endfunction
 
 function! SyntaxCheckers_python_pyflakes_GetLocList() dict
-    let makeprg = self.makeprgBuild({})
+    let makeprg = self.makeprgBuild({
+        \ 'exe_before': (syntastic#util#isRunningWindows() ? '' : 'TERM=dumb') })
 
     let errorformat =
         \ '%E%f:%l: could not compile,'.
         \ '%-Z%p^,'.
+        \ '%E%f:%l:%c: %m,'.
         \ '%E%f:%l: %m,'.
         \ '%-G%.%#'
 
