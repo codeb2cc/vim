@@ -1,5 +1,5 @@
 function! emmet#lang#sass#findTokens(str)
-  return a:str
+  return emmet#lang#css#findTokens(a:str)
 endfunction
 
 function! emmet#lang#sass#parseIntoTree(abbr, type)
@@ -50,10 +50,14 @@ function! emmet#lang#sass#toString(settings, current, type, inline, filters, ite
 
     let inner = ''
     for child in current.child
-      let inner .= emmet#toString(child, type, inline, filters, itemno, indent)
+      let tmp = emmet#toString(child, type, inline, filters, itemno, indent)
+      let tmp = substitute(tmp, "\n", "\n" . escape(indent, '\'), 'g')
+      let tmp = substitute(tmp, "\n" . escape(indent, '\') . '$', '${cursor}\n', 'g')
+      let inner .= tmp
     endfor
-    let inner = substitute(inner, "\n", "\n" . indent, 'g')
-    let str .= indent . inner
+    if len(inner) > 0
+      let str .= indent . inner
+    endif
   else
     let text = emmet#lang#css#toString(settings, current, type, inline, filters, itemno, indent)
     let text = substitute(text, '\s*;\ze\(\${[^}]\+}\)\?\(\n\|$\)', '', 'g')
