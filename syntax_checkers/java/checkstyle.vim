@@ -27,18 +27,6 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! SyntaxCheckers_java_checkstyle_Preprocess(errors)
-    let out = copy(a:errors)
-    for n in range(len(out))
-        let parts = matchlist(out[n], '\m\(.*<file name="\)\([^"]\+\)\(">.*\)')
-        if len(parts) >= 4
-            let parts[2] = syntastic#util#decodeXMLEntities(parts[2])
-            let out[n] = join(parts[1:3], '')
-        endif
-    endfor
-    return out
-endfunction
-
 function! SyntaxCheckers_java_checkstyle_GetLocList() dict
 
     let fname = syntastic#util#shescape( expand('%:p:h') . '/' . expand('%:t') )
@@ -48,27 +36,19 @@ function! SyntaxCheckers_java_checkstyle_GetLocList() dict
     endif
 
     let makeprg = self.makeprgBuild({
-        \ 'args': '-cp ' . g:syntastic_java_checkstyle_classpath .
-        \         ' com.puppycrawl.tools.checkstyle.Main -c ' . g:syntastic_java_checkstyle_conf_file .
-        \         ' -f xml',
+        \ 'args_after': '-cp ' . g:syntastic_java_checkstyle_classpath .
+        \       ' com.puppycrawl.tools.checkstyle.Main -c ' .
+        \       syntastic#util#shexpand(g:syntastic_java_checkstyle_conf_file) .
+        \       ' -f xml',
         \ 'fname': fname })
 
-    let errorformat =
-        \ '%P<file name="%f">,' .
-        \ '%Q</file>,' .
-        \ '%E<error line="%l" column="%c" severity="%trror" message="%m" source="%.%#"/>,' .
-        \ '%E<error line="%l" severity="%trror" message="%m" source="%.%#"/>,' .
-        \ '%E<error line="%l" column="%c" severity="%tarning" message="%m" source="%.%#"/>,' .
-        \ '%E<error line="%l" severity="%tarning" message="%m" source="%.%#"/>,' .
-        \ '%-G%.%#'
+    let errorformat = '%f:%t:%l:%c:%m'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'subtype': 'Style',
-        \ 'preprocess': 'SyntaxCheckers_java_checkstyle_Preprocess',
-        \ 'postprocess': ['cygwinRemoveCR', 'decodeXMLEntities'] })
-
+        \ 'preprocess': 'checkstyle',
+        \ 'subtype': 'Style' })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
