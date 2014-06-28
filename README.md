@@ -70,4 +70,5 @@ References:
 * `bundle/vim-unimpaired` : https://github.com/tpope/vim-unimpaired.git
 * `bundle/xterm-color-table` : https://github.com/guns/xterm-color-table.vim.git
 * `bundle/yankring` : https://github.com/vim-scripts/YankRing.vim.git
+* `bundle/vim-gocode` : https://github.com/Blackrush/vim-gocode.git
 

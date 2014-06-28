@@ -22,6 +22,7 @@ repos["bundle/vim-less"]="https://github.com/groenewege/vim-less.git"
 repos["bundle/vim-unimpaired"]="https://github.com/tpope/vim-unimpaired.git"
 repos["bundle/xterm-color-table"]="https://github.com/guns/xterm-color-table.vim.git"
 repos["bundle/yankring"]="https://github.com/vim-scripts/YankRing.vim.git"
+repos["bundle/vim-gocode"]="https://github.com/Blackrush/vim-gocode.git"
 
 for repo in "${!repos[@]}"
 do
