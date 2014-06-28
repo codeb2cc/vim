@@ -65,7 +65,6 @@ References:
 * `bundle/vim-airline` : https://github.com/bling/vim-airline.git
 * `bundle/vim-fugitive` : https://github.com/tpope/vim-fugitive.git
 * `bundle/vim-gitgutter` : https://github.com/airblade/vim-gitgutter.git
-* `bundle/vim-golang` : https://github.com/jnwhiteh/vim-golang.git
 * `bundle/vim-less` : https://github.com/groenewege/vim-less.git
 * `bundle/vim-unimpaired` : https://github.com/tpope/vim-unimpaired.git
 * `bundle/xterm-color-table` : https://github.com/guns/xterm-color-table.vim.git
