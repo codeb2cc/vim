@@ -43,15 +43,18 @@ any more. From now on, use the `subtree pull` command instead:
 
       git subtree pull --prefix bundle/ack https://github.com/mileszs/ack.vim.git master --squash
 
+or use the `update.sh` script:
+
+      sh update.sh
+
 
 References:
 
 * `bundle/ack` : https://github.com/mileszs/ack.vim.git
 * `bundle/align` : https://github.com/vim-scripts/Align.git
 * `bundle/bufexplorer` : https://github.com/vim-scripts/bufexplorer.zip.git
-* `bundle/coffee-script` : https://github.com/kchmck/vim-coffee-script.git
 * `bundle/ctrlp` : https://github.com/kien/ctrlp.vim.git
-* `bundle/emmet-vim` : url = https://github.com/mattn/emmet-vim.git
+* `bundle/emmet-vim` : https://github.com/mattn/emmet-vim.git
 * `bundle/matchit` : https://github.com/vim-scripts/matchit.zip.git
 * `bundle/nerdcommenter` : https://github.com/scrooloose/nerdcommenter.git
 * `bundle/nerdtree` : https://github.com/scrooloose/nerdtree.git
