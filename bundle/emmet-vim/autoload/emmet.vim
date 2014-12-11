@@ -6,7 +6,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:filtermx = '|\(\%(bem\|html\|haml\|slim\|e\|c\|fc\|xsl\|t\|\/[^ ]\+\)\s*,\{0,1}\s*\)*$'
+let s:filtermx = '|\(\%(bem\|html\|haml\|slim\|e\|c\|s\|fc\|xsl\|t\|\/[^ ]\+\)\s*,\{0,1}\s*\)*$'
 
 function! emmet#getExpandos(type, key)
   let expandos = emmet#getResource(a:type, 'expandos', {})
@@ -123,29 +123,30 @@ function! emmet#isExpandable()
 endfunction
 
 function! emmet#mergeConfig(lhs, rhs)
-  if type(a:lhs) == 3 && type(a:rhs) == 3
-    let a:lhs += a:rhs
-    if len(a:lhs)
-      call remove(a:lhs, 0, len(a:lhs)-1)
+  let [lhs, rhs] = [a:lhs, a:rhs]
+  if type(lhs) == 3 && type(rhs) == 3
+    let lhs += rhs
+    if len(lhs)
+      call remove(lhs, 0, len(lhs)-1)
     endif
-    for rhi in a:rhs
-      call add(a:lhs, a:rhs[rhi])
+    for rhi in rhs
+      call add(lhs, rhs[rhi])
     endfor
-  elseif type(a:lhs) == 4 && type(a:rhs) == 4
-    for key in keys(a:rhs)
-      if type(a:rhs[key]) == 3
-        if !has_key(a:lhs, key)
-          let a:lhs[key] = []
+  elseif type(lhs) == 4 && type(rhs) == 4
+    for key in keys(rhs)
+      if type(rhs[key]) == 3
+        if !has_key(lhs, key)
+          let lhs[key] = []
         endif
-        let a:lhs[key] += a:rhs[key]
-      elseif type(a:rhs[key]) == 4
-        if has_key(a:lhs, key)
-          call emmet#mergeConfig(a:lhs[key], a:rhs[key])
+        let lhs[key] += rhs[key]
+      elseif type(rhs[key]) == 4
+        if has_key(lhs, key)
+          call emmet#mergeConfig(lhs[key], rhs[key])
         else
-          let a:lhs[key] = a:rhs[key]
+          let lhs[key] = rhs[key]
         endif
       else
-        let a:lhs[key] = a:rhs[key]
+        let lhs[key] = rhs[key]
       endif
     endfor
   endif
@@ -297,7 +298,6 @@ function! emmet#getResource(type, name, default)
     endif
     for ext in extends
       if has_key(s:emmet_settings, ext) && has_key(s:emmet_settings[ext], a:name)
-        let V = s:emmet_settings[ext][a:name]
         if type(ret) == 3 || type(ret) == 4
           call emmet#mergeConfig(ret, s:emmet_settings[ext][a:name])
         else
@@ -308,7 +308,6 @@ function! emmet#getResource(type, name, default)
   endif
 
   if has_key(s:emmet_settings[a:type], a:name)
-    let v = s:emmet_settings[a:type][a:name]
     if type(ret) == 3 || type(ret) == 4
       call emmet#mergeConfig(ret, s:emmet_settings[a:type][a:name])
     else
@@ -391,8 +390,8 @@ function! emmet#getDollarValueByKey(key)
     let V = get(ftsetting, key)
     if type(V) == 1 | return V | endif
   endif
-  if type(ret) != 1 && has_key(s:emmet_settings, key)
-    let V = get(s:emmet_settings, key)
+  if type(ret) != 1 && has_key(s:emmet_settings.variables, key)
+    let V = get(s:emmet_settings.variables, key)
     if type(V) == 1 | return V | endif
   endif
   if has_key(s:emmet_settings, 'custom_expands') && type(s:emmet_settings['custom_expands']) == 4
@@ -430,7 +429,6 @@ endfunction
 
 function! emmet#expandCursorExpr(expand, mode)
   let expand = a:expand
-  let type = emmet#getFileType()
   if expand !~ '\${cursor}'
     if a:mode == 2
       let expand = '${cursor}' . expand
@@ -479,6 +477,8 @@ function! emmet#expandAbbr(mode, abbr) range
         let spl = emmet#splitFilterArg(filters)
         let fline = getline(a:firstline)
         let query = substitute(query, '>\{0,1}{\$#}\s*$', '{\\$column\\$}*' . len(split(fline, spl)), '')
+      else
+        let spl = ''
       endif
       let items = emmet#parseIntoTree(query, type).child
       for item in items
@@ -640,7 +640,12 @@ function! emmet#expandAbbr(mode, abbr) range
         let indent = ''
       endif
       let expand = substitute(expand, '\n\s*$', '', 'g')
-      let expand = line[:-len(part)-1] . substitute(expand, "\n", "\n" . indent, 'g') . rest
+      if emmet#useFilter(filters, 's')
+        let epart = substitute(expand, "\n\s\*", "", 'g')
+      else
+        let epart = substitute(expand, "\n", "\n" . indent, 'g')
+      endif
+      let expand = line[:-len(part)-1] . epart . rest
       let lines = split(expand, "\n", 1)
       if a:mode == 2
         silent! exe "normal! gvc"
@@ -777,7 +782,9 @@ function! emmet#anchorizeURL(flag)
 
   let type = emmet#getFileType()
   let rtype = emmet#lang#exists(type) ? type : 'html'
-  if a:flag == 0
+  if &ft == 'markdown'
+    let expand = printf("[%s](%s)", substitute(title, '[\[\]]', '\\&', 'g'), url)
+  elseif a:flag == 0
     let a = emmet#lang#html#parseTag('<a>')
     let a.attr.href = url
     let a.value = '{' . title . '}'
@@ -855,6 +862,9 @@ function! emmet#expandWord(abbr, type, orig)
     let expand = substitute(expand, '<', '\&lt;', 'g')
     let expand = substitute(expand, '>', '\&gt;', 'g')
   endif
+  if emmet#useFilter(filters, 's')
+    let expand = substitute(expand, "\n\s\*", "", 'g')
+  endif
   if a:orig == 0
     let expand = emmet#expandDollarExpr(expand)
     let expand = substitute(expand, '\${cursor}', '', 'g')
@@ -900,8 +910,13 @@ endfunction
 
 unlet! s:emmet_settings
 let s:emmet_settings = {
-\    'lang': "en",
-\    'charset': "UTF-8",
+\    'variables': {
+\      'lang': "en",
+\      'locale': "en-US",
+\      'charset': "UTF-8",
+\      'indentation': "\t",
+\      'newline': "\n",
+\    },
 \    'custom_expands' : {
 \      '^\%(lorem\|lipsum\)\(\d*\)$' : function('emmet#lorem#en#expand'),
 \    },
@@ -926,7 +941,7 @@ let s:emmet_settings = {
 \            'l:a': 'left:auto;',
 \            'z': 'z-index:|;',
 \            'z:a': 'z-index:auto;',
-\            'fl': 'float:|;',
+\            'fl': 'float:left;',
 \            'fl:n': 'float:none;',
 \            'fl:l': 'float:left;',
 \            'fl:r': 'float:right;',
@@ -1480,6 +1495,7 @@ let s:emmet_settings = {
 \            'ins': {'datetime': '${datetime}'},
 \            'link:css': [{'rel': 'stylesheet'}, g:emmet_html5 ? {} : {'type': 'text/css'}, {'href': '|style.css'}, {'media': 'all'}],
 \            'link:print': [{'rel': 'stylesheet'}, g:emmet_html5 ? {} : {'type': 'text/css'}, {'href': '|print.css'}, {'media': 'print'}],
+\            'link:import': [{'rel': 'import'}, {'href': ''}],
 \            'link:favicon': [{'rel': 'shortcut icon'}, {'type': 'image/x-icon'}, {'href': '|favicon.ico'}],
 \            'link:touch': [{'rel': 'apple-touch-icon'}, {'href': '|favicon.png'}],
 \            'link:rss': [{'rel': 'alternate'}, {'type': 'application/rss+xml'}, {'title': 'RSS'}, {'href': '|rss.xml'}],
@@ -1671,6 +1687,7 @@ let s:emmet_settings = {
 \                    ."\t%body\n"
 \                    ."\t\t${child}|\n",
 \        },
+\        'attribute_style': 'hash',
 \    },
 \    'slim': {
 \        'indentation': '  ',

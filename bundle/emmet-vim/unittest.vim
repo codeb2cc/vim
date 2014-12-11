@@ -420,6 +420,10 @@ finish
           'result': "<div>\n\t<!-- #page -->\n\t<div id=\"page\">\n\t\t<!-- .title -->\n\t\t<p class=\"title\"></p>\n\t\t<!-- /.title -->\n\t\t<p></p>\n\t</div>\n\t<!-- /#page -->\n</div>\n",
         },
         {
+          'query': "kbd*2|s",
+          'result': "<kbd></kbd><kbd></kbd>",
+        },
+        {
           'query': "link:css",
           'result': "<link rel=\"stylesheet\" href=\"style.css\" media=\"all\">\n",
         },
@@ -560,7 +564,7 @@ finish
       'tests': [
         {
           'query': "img[src=http://mattn.kaoriya.net/images/logo.png]$$$$\\<c-y>,\\<c-y>i$$$$",
-          'result': "<img src=\"http://mattn.kaoriya.net/images/logo.png\" alt=\"\" width=\"96\" height=\"96\">",
+          'result': "<img src=\"http://mattn.kaoriya.net/images/logo.png\" alt=\"\" width=\"113\" height=\"113\">",
         },
         {
           'query': "img[src=/logo.png]$$$$\\<c-y>,\\<c-y>i$$$$",
@@ -568,7 +572,7 @@ finish
         },
         {
           'query': "img[src=http://mattn.kaoriya.net/images/logo.png width=foo height=bar]$$$$\\<c-y>,\\<c-y>i$$$$",
-          'result': "<img src=\"http://mattn.kaoriya.net/images/logo.png\" alt=\"\" width=\"96\" height=\"96\">",
+          'result': "<img src=\"http://mattn.kaoriya.net/images/logo.png\" alt=\"\" width=\"113\" height=\"113\">",
         },
       ],
     },
@@ -725,6 +729,10 @@ finish
         {
           'query': "{c#dba.7$$$$}",
           'result': "{color: rgb(221, 187, 170, 0.7);}",
+        },
+        {
+          'query': "{dn$$$$}",
+          'result': "{display: none;}",
         },
       ],
     },
@@ -893,86 +901,82 @@ finish
   ],
   'dummy': "}}}"},
 { 'test-sass': "{{{",
-  'type': 'sass',
+  'type': 'scss',
   'categories': [
     {
       'name': 'expand abbreviation',
       'tests': [
         {
           'query': "@i$$$$",
-          'result': "@import url()",
+          'result': "@import url();",
         },
         {
           'query': "{fs:n$$$$}",
-          'result': "{font-style: normal}",
+          'result': "{font-style: normal;}",
         },
         {
           'query': "{fl:l|fc$$$$}",
-          'result': "{float: left}",
+          'result': "{float: left;}",
         },
         {
           'query': "{bg+$$$$}",
-          'result': "{background: #FFF url($$$$) 0 0 no-repeat}",
+          'result': "{background: #FFF url($$$$) 0 0 no-repeat;}",
         },
         {
           'query': "{bg+!$$$$}",
-          'result': "{background: #FFF url($$$$) 0 0 no-repeat !important}",
+          'result': "{background: #FFF url($$$$) 0 0 no-repeat !important;}",
         },
         {
           'query': "{m$$$$}",
-          'result': "{margin: $$$$}",
+          'result': "{margin: $$$$;}",
         },
         {
           'query': "{m0.1p$$$$}",
-          'result': "{margin: 0.1%}",
+          'result': "{margin: 0.1%;}",
         },
         {
           'query': "{m1.0$$$$}",
-          'result': "{margin: 1.0em}",
+          'result': "{margin: 1.0em;}",
         },
         {
           'query': "{m2$$$$}",
-          'result': "{margin: 2px}",
+          'result': "{margin: 2px;}",
         },
         {
           'query': "{bdrs10$$$$}",
-          'result': "{border-radius: 10px}",
+          'result': "{border-radius: 10px;}",
         },
         {
           'query': "{-bdrs20$$$$}",
-          'result': "{-webkit-border-radius: 20px\n-moz-border-radius: 20px\nborder-radius: 20px}",
+          'result': "{-webkit-border-radius: 20px;\n-moz-border-radius: 20px;\nborder-radius: 20px;}",
         },
         {
           'query': "{lg(top,#fff,#000)$$$$}",
-          'result': "{background-image: -webkit-gradient(top, 0 0, 0 100, from(#fff), to(#000))\nbackground-image: -webkit-linear-gradient(#fff, #000)\nbackground-image: -moz-linear-gradient(#fff, #000)\nbackground-image: -o-linear-gradient(#fff, #000)\nbackground-image: linear-gradient(#fff, #000)\n}",
+          'result': "{background-image: -webkit-gradient(top, 0 0, 0 100, from(#fff), to(#000));\nbackground-image: -webkit-linear-gradient(#fff, #000);\nbackground-image: -moz-linear-gradient(#fff, #000);\nbackground-image: -o-linear-gradient(#fff, #000);\nbackground-image: linear-gradient(#fff, #000);\n}",
         },
         {
           'query': "{m10-5-0$$$$}",
-          'result': "{margin: 10px 5px 0}",
+          'result': "{margin: 10px 5px 0;}",
         },
         {
           'query': "{m-10--5$$$$}",
-          'result': "{margin: -10px -5px}",
+          'result': "{margin: -10px -5px;}",
         },
         {
           'query': "{m10-auto$$$$}",
-          'result': "{margin: 10px auto}",
+          'result': "{margin: 10px auto;}",
         },
         {
           'query': "{w100p$$$$}",
-          'result': "{width: 100%}",
+          'result': "{width: 100%;}",
         },
         {
           'query': "{h50e$$$$}",
-          'result': "{height: 50em}",
+          'result': "{height: 50em;}",
         },
         {
           'query': "{(bg+)+c$$$$}",
-          'result': "{background: #FFF url($$$$) 0 0 no-repeat\ncolor: #000}",
-        },
-        {
-          'query': "{.first>.second>.third$$$$}",
-          'result': "{div.first\n\tdiv.second\n\t\tdiv.third$$$$}",
+          'result': "{background: #FFF url($$$$) 0 0 no-repeat;\ncolor: #000;}",
         },
       ],
     },

@@ -8,7 +8,6 @@ function! emmet#lang#css#parseIntoTree(abbr, type)
   let prefix = 0
   let value = ''
 
-  let settings = emmet#getSettings()
   let indent = emmet#getIndentation(type)
   let aliases = emmet#getResource(type, 'aliases', {})
   let snippets = emmet#getResource(type, 'snippets', {})
@@ -19,7 +18,7 @@ function! emmet#lang#css#parseIntoTree(abbr, type)
   " emmet
   let tokens = split(abbr, '+\ze[^+)!]')
   let block = emmet#util#searchRegion("{", "}")
-  if abbr !~ '^@' && emmet#getBaseType(type) == 'css' && block[0] == [0,0] && block[1] == [0,0]
+  if abbr !~ '^@' && emmet#getBaseType(type) == 'css' && type != 'sass' && block[0] == [0,0] && block[1] == [0,0]
     let current = emmet#newNode()
     let current.snippet = abbr . " {\n" . indent . "${cursor}\n}"
     let current.name = ''
@@ -89,6 +88,10 @@ function! emmet#lang#css#parseIntoTree(abbr, type)
             if len(vv) == 0
               let pat = '^' . join(split(tag_name, '\zs'), '[^:]\{-}')
               let vv = filter(sort(keys(snippets)), 'snippets[v:val] =~ pat')
+              if len(vv) == 0
+                let pat = '^' . join(split(tag_name, '\zs'), '.\{-}')
+                let vv = filter(sort(keys(snippets)), 'snippets[v:val] =~ pat')
+              endif
             endif
             let minl = -1
             for vk in vv

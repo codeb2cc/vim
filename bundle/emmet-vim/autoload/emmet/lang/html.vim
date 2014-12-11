@@ -4,7 +4,7 @@ let s:mx = '\([+>]\|[<^]\+\)\{-}\s*'
 \       .'\('
 \         .'\%('
 \           .'\%(#{[{}a-zA-Z0-9_\-\$]\+\|#[a-zA-Z0-9_\-\$]\+\)'
-\           .'\|\%(\[[^\]]\+\]\)'
+\           .'\|\%(\[\%("[^"]*"\|[^"\]]*\)\+\]\)'
 \           .'\|\%(\.{[{}a-zA-Z0-9_\-\$]\+\|\.[a-zA-Z0-9_\-\$]\+\)'
 \         .'\)*'
 \       .'\)'
@@ -190,7 +190,10 @@ function! emmet#lang#html#parseIntoTree(abbr, type)
     if len(attributes)
       let attr = attributes
       while len(attr)
-        let item = matchstr(attr, '\(\%(\%(#[{}a-zA-Z0-9_\-\$]\+\)\|\%(\[[^\]]\+\]\)\|\%(\.[{}a-zA-Z0-9_\-\$]\+\)*\)\)')
+        let item = matchstr(attr, '\(\%(\%(#[{}a-zA-Z0-9_\-\$]\+\)\|\%(\[\%("[^"]*"\|[^"\]]*\)\+\]\)\|\%(\.[{}a-zA-Z0-9_\-\$]\+\)*\)\)')
+        if g:emmet_debug > 1
+          echomsg "attr=" . item
+        endif
         if len(item) == 0
           break
         endif
@@ -213,6 +216,8 @@ function! emmet#lang#html#parseIntoTree(abbr, type)
             endif
             if len(ks) > 0
               let current.attr[ks[0]] = atts
+            else
+              let current.attr[atts] = ""
             endif
           else
             while len(atts)
@@ -397,7 +402,8 @@ function! emmet#lang#html#toString(settings, current, type, inline, filters, ite
     return text
   endif
   if len(current_name) > 0
-  let str .= '<' . current_name
+    let str .= '<' . current_name
+  endif
   for attr in emmet#util#unique(current.attrs_order + keys(current.attr))
     if !has_key(current.attr, attr)
       continue
