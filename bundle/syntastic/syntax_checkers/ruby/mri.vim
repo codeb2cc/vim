@@ -21,6 +21,7 @@ set cpo&vim
 function! SyntaxCheckers_ruby_mri_IsAvailable() dict
     if !exists('g:syntastic_ruby_mri_exec') && exists('g:syntastic_ruby_exec')
         let g:syntastic_ruby_mri_exec = g:syntastic_ruby_exec
+        call self.log('g:syntastic_ruby_exec =', g:syntastic_ruby_exec)
     endif
     return executable(self.getExec())
 endfunction
@@ -35,9 +36,7 @@ function! SyntaxCheckers_ruby_mri_GetHighlightRegex(i)
 endfunction
 
 function! SyntaxCheckers_ruby_mri_GetLocList() dict
-    let makeprg = self.makeprgBuild({
-        \ 'exe_before': (syntastic#util#isRunningWindows() ? '' : 'RUBYOPT='),
-        \ 'args_after': '-w -T1 -c' })
+    let makeprg = self.makeprgBuild({ 'args_after': '-w -T1 -c' })
 
     "this is a hack to filter out a repeated useless warning in rspec files
     "containing lines like
@@ -46,7 +45,7 @@ function! SyntaxCheckers_ruby_mri_GetLocList() dict
     "
     "Which always generate the warning below. Note that ruby >= 1.9.3 includes
     "the word "possibly" in the warning
-    let errorformat = '%-G%.%#warning: %\(possibly %\)%\?useless use of == in void context,'
+    let errorformat = '%-G%\m%.%#warning: %\%%(possibly %\)%\?useless use of == in void context,'
 
     " filter out lines starting with ...
     " long lines are truncated and wrapped in ... %p then returns the wrong
@@ -62,9 +61,12 @@ function! SyntaxCheckers_ruby_mri_GetLocList() dict
         \ '%W%f:%l: %m,'.
         \ '%-C%.%#'
 
+    let env = syntastic#util#isRunningWindows() ? {} : { 'RUBYOPT': '' }
+
     return SyntasticMake({
         \ 'makeprg': makeprg,
-        \ 'errorformat': errorformat })
+        \ 'errorformat': errorformat,
+        \ 'env': env })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

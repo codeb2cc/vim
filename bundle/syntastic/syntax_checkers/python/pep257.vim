@@ -2,8 +2,6 @@
 "File:        pep257.vim
 "Description: Docstring style checking plugin for syntastic.vim
 "============================================================================
-"
-" For details about pep257 see: https://github.com/GreenSteam/pep257
 
 if exists('g:loaded_syntastic_python_pep257_checker')
     finish
@@ -15,12 +13,12 @@ set cpo&vim
 
 function! SyntaxCheckers_python_pep257_GetLocList() dict
     if !exists('s:pep257_new')
-        let s:pep257_new = syntastic#util#versionIsAtLeast(syntastic#util#getVersion(
-            \ self.getExecEscaped() . ' --version'), [0, 3])
+        let ver = syntastic#util#getVersion(self.getExecEscaped() . ' --version')
+        call self.log(self.getExec() . ' version =', ver)
+        let s:pep257_new = syntastic#util#versionIsAtLeast(ver, [0, 3])
     endif
 
-    let makeprg = self.makeprgBuild({
-        \ 'exe_before': (syntastic#util#isRunningWindows() ? '' : 'TERM=dumb') })
+    let makeprg = self.makeprgBuild({})
 
     if s:pep257_new
         let errorformat =
@@ -33,9 +31,12 @@ function! SyntaxCheckers_python_pep257_GetLocList() dict
             \ '%+C    %m'
     endif
 
+    let env = syntastic#util#isRunningWindows() ? {} : { 'TERM': 'dumb' }
+
     let loclist = SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
+        \ 'env': env,
         \ 'subtype': 'Style',
         \ 'preprocess': 'killEmpty',
         \ 'postprocess': ['compressWhitespace'] })

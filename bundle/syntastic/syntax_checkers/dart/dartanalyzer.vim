@@ -21,7 +21,7 @@ function! SyntaxCheckers_dart_dartanalyzer_GetHighlightRegex(error)
     if a:error['len']
         let lcol = a:error['col'] - 1
         let rcol = a:error['col'] + a:error['len']
-        let ret = '\%>' . lcol . 'c.*\%<' . rcol . 'c'
+        let ret = '\%>' . lcol . 'c\%<' . rcol . 'c'
     else
         let ret = ''
     endif
@@ -53,7 +53,7 @@ function! SyntaxCheckers_dart_dartanalyzer_GetLocList() dict
     let loclist = SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'returns': [0, 1, 2] })
+        \ 'returns': [0, 1, 2, 3] })
 
     for e in loclist
         let e['text'] = substitute(e['text'], '\m\\\([\\|]\)', '\1', 'g')

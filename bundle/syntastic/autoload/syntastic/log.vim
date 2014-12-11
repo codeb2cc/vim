@@ -36,6 +36,7 @@ function! syntastic#log#oneTimeWarn(msg) " {{{2
     call syntastic#log#warn(a:msg)
 endfunction " }}}2
 
+" @vimlint(EVL102, 1, l:OLD_VAR)
 function! syntastic#log#deprecationWarn(old, new, ...) " {{{2
     if exists('g:syntastic_' . a:old) && !exists('g:syntastic_' . a:new)
         let msg = 'variable g:syntastic_' . a:old . ' is deprecated, please use '
@@ -57,14 +58,15 @@ function! syntastic#log#deprecationWarn(old, new, ...) " {{{2
         call syntastic#log#oneTimeWarn(msg)
     endif
 endfunction " }}}2
+" @vimlint(EVL102, 0, l:OLD_VAR)
 
 function! syntastic#log#debug(level, msg, ...) " {{{2
-    if !s:isDebugEnabled(a:level)
+    if !s:_isDebugEnabled(a:level)
         return
     endif
 
-    let leader = s:logTimestamp()
-    call s:logRedirect(1)
+    let leader = s:_log_timestamp()
+    call s:_logRedirect(1)
 
     if a:0 > 0
         " filter out dictionary functions
@@ -75,69 +77,69 @@ function! syntastic#log#debug(level, msg, ...) " {{{2
         echomsg leader . a:msg
     endif
 
-    call s:logRedirect(0)
+    call s:_logRedirect(0)
 endfunction " }}}2
 
 function! syntastic#log#debugShowOptions(level, names) " {{{2
-    if !s:isDebugEnabled(a:level)
+    if !s:_isDebugEnabled(a:level)
         return
     endif
 
-    let leader = s:logTimestamp()
-    call s:logRedirect(1)
+    let leader = s:_log_timestamp()
+    call s:_logRedirect(1)
 
     let vlist = copy(type(a:names) == type("") ? [a:names] : a:names)
     if !empty(vlist)
         call map(vlist, "'&' . v:val . ' = ' . strtrans(string(eval('&' . v:val)))")
         echomsg leader . join(vlist, ', ')
     endif
-    call s:logRedirect(0)
+    call s:_logRedirect(0)
 endfunction " }}}2
 
 function! syntastic#log#debugShowVariables(level, names) " {{{2
-    if !s:isDebugEnabled(a:level)
+    if !s:_isDebugEnabled(a:level)
         return
     endif
 
-    let leader = s:logTimestamp()
-    call s:logRedirect(1)
+    let leader = s:_log_timestamp()
+    call s:_logRedirect(1)
 
     let vlist = type(a:names) == type("") ? [a:names] : a:names
     for name in vlist
-        let msg = s:formatVariable(name)
+        let msg = s:_format_variable(name)
         if msg != ''
             echomsg leader . msg
         endif
     endfor
 
-    call s:logRedirect(0)
+    call s:_logRedirect(0)
 endfunction " }}}2
 
 function! syntastic#log#debugDump(level) " {{{2
-    if !s:isDebugEnabled(a:level)
+    if !s:_isDebugEnabled(a:level)
         return
     endif
 
-    call syntastic#log#debugShowVariables( a:level, sort(keys(g:syntastic_defaults)) )
+    call syntastic#log#debugShowVariables( a:level, sort(keys(g:_SYNTASTIC_DEFAULTS)) )
 endfunction " }}}2
 
 " }}}1
 
 " Private functions {{{1
 
-function! s:isDebugEnabled_smart(level) " {{{2
+function! s:_isDebugEnabled_smart(level) " {{{2
     return and(g:syntastic_debug, a:level)
 endfunction " }}}2
 
-function! s:isDebugEnabled_dumb(level) " {{{2
+function! s:_isDebugEnabled_dumb(level) " {{{2
     " poor man's bit test for bit N, assuming a:level == 2**N
     return (g:syntastic_debug / a:level) % 2
 endfunction " }}}2
 
-let s:isDebugEnabled = function(exists('*and') ? 's:isDebugEnabled_smart' : 's:isDebugEnabled_dumb')
-lockvar s:isDebugEnabled
+let s:_isDebugEnabled = function(exists('*and') ? 's:_isDebugEnabled_smart' : 's:_isDebugEnabled_dumb')
+lockvar s:_isDebugEnabled
 
-function! s:logRedirect(on) " {{{2
+function! s:_logRedirect(on) " {{{2
     if exists("g:syntastic_debug_file")
         if a:on
             try
@@ -152,18 +154,15 @@ function! s:logRedirect(on) " {{{2
     endif
 endfunction " }}}2
 
-function! s:logTimestamp_smart() " {{{2
-    return 'syntastic: ' . split(reltimestr(reltime(g:syntastic_start)))[0] . ': '
+" }}}1
+
+" Utilities {{{1
+
+function! s:_log_timestamp() " {{{2
+    return 'syntastic: ' . split(reltimestr(reltime(g:_SYNTASTIC_START)))[0] . ': '
 endfunction " }}}2
 
-function! s:logTimestamp_dumb() " {{{2
-    return 'syntastic: debug: '
-endfunction " }}}2
-
-let s:logTimestamp = function(has('reltime') ? 's:logTimestamp_smart' : 's:logTimestamp_dumb')
-lockvar s:logTimestamp
-
-function! s:formatVariable(name) " {{{2
+function! s:_format_variable(name) " {{{2
     let vals = []
     if exists('g:syntastic_' . a:name)
         call add(vals, 'g:syntastic_' . a:name . ' = ' . strtrans(string(g:syntastic_{a:name})))
