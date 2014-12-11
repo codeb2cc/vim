@@ -2,7 +2,7 @@
 " File: emmet.vim
 " Author: Yasuhiro Matsumoto <mattn.jp@gmail.com>
 " Last Change: 28-Nov-2013.
-" Version: 0.84
+" Version: 0.85
 " WebPage: http://github.com/mattn/emmet-vim
 " Description: vim plugins for HTML and CSS hi-speed coding.
 " SeeAlso: http://emmet.io/
@@ -138,15 +138,13 @@ function! s:install_plugin(mode, buffer)
     if a:mode != 'a' && stridx(a:mode, item.mode) == -1
       continue
     endif
-    if !hasmapto('<plug>(' . item.plug . ')', item.mode)
-      exe item.mode . 'noremap '. buffer .' <plug>(' . item.plug . ') ' . item.func
-    endif
+    exe item.mode . 'noremap '. buffer .' <plug>(' . item.plug . ') ' . item.func
     if exists('g:' . item.var)
       let key = eval('g:' . item.var)
     else
       let key = g:user_emmet_leader_key . item.key
     endif
-    if len(maparg(key, item.mode)) == 0
+    if !hasmapto('<plug>(' . item.plug . ')', item.mode)
       exe item.mode . 'map ' . buffer . ' <unique> ' . key . ' <plug>(' . item.plug . ')'
     endif
   endfor
