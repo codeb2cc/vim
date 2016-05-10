@@ -1,16 +1,41 @@
 let s:file = ''
 let s:using_xolox_shell = -1
 let s:exit_code = 0
+let s:fish = &shell =~# 'fish'
 
 function! gitgutter#utility#warn(message)
   echohl WarningMsg
-  echomsg 'vim-gitgutter: ' . a:message
+  echo 'vim-gitgutter: ' . a:message
   echohl None
-  let b:warningmsg = a:message
+  let v:warningmsg = a:message
 endfunction
 
+function! gitgutter#utility#warn_once(message, key)
+  if empty(getbufvar(s:bufnr, a:key))
+    call setbufvar(s:bufnr, a:key, '1')
+    echohl WarningMsg
+    redraw | echo 'vim-gitgutter: ' . a:message
+    echohl None
+    let v:warningmsg = a:message
+  endif
+endfunction
+
+" Returns truthy when the buffer's file should be processed; and falsey when it shouldn't.
+" This function does not and should not make any system calls.
 function! gitgutter#utility#is_active()
-  return g:gitgutter_enabled && gitgutter#utility#exists_file()
+  return g:gitgutter_enabled &&
+        \ !pumvisible() &&
+        \ gitgutter#utility#is_file_buffer() &&
+        \ gitgutter#utility#exists_file() &&
+        \ gitgutter#utility#not_git_dir()
+endfunction
+
+function! gitgutter#utility#not_git_dir()
+  return gitgutter#utility#full_path_to_directory_of_file() !~ '[/\\]\.git\($\|[/\\]\)'
+endfunction
+
+function! gitgutter#utility#is_file_buffer()
+  return empty(getbufvar(s:bufnr, '&buftype'))
 endfunction
 
 " A replacement for the built-in `shellescape(arg)`.
@@ -47,6 +72,14 @@ function! gitgutter#utility#filename()
   return fnamemodify(s:file, ':t')
 endfunction
 
+function! gitgutter#utility#extension()
+  return fnamemodify(s:file, ':e')
+endfunction
+
+function! gitgutter#utility#full_path_to_directory_of_file()
+  return fnamemodify(s:file, ':p:h')
+endfunction
+
 function! gitgutter#utility#directory_of_file()
   return fnamemodify(s:file, ':h')
 endfunction
@@ -65,17 +98,6 @@ endfunction
 
 function! gitgutter#utility#save_last_seen_change()
   call setbufvar(s:bufnr, 'gitgutter_last_tick', getbufvar(s:bufnr, 'changedtick'))
-endfunction
-
-function! gitgutter#utility#buffer_contents()
-  if &fileformat ==# "dos"
-    let eol = "\r\n"
-  elseif &fileformat ==# "mac"
-    let eol = "\r"
-  else
-    let eol = "\n"
-  endif
-  return join(getbufline(s:bufnr, 1, '$'), eol) . eol
 endfunction
 
 function! gitgutter#utility#shell_error()
@@ -98,6 +120,8 @@ function! gitgutter#utility#using_xolox_shell()
 endfunction
 
 function! gitgutter#utility#system(cmd, ...)
+  call gitgutter#debug#log(a:cmd, a:000)
+
   if gitgutter#utility#using_xolox_shell()
     let options = {'command': a:cmd, 'check': 0}
     if a:0 > 0
@@ -124,7 +148,7 @@ function! gitgutter#utility#file_relative_to_repo_root()
 endfunction
 
 function! gitgutter#utility#command_in_directory_of_file(cmd)
-  return 'cd ' . gitgutter#utility#shellescape(gitgutter#utility#directory_of_file()) . ' && ' . a:cmd
+  return 'cd '.gitgutter#utility#shellescape(gitgutter#utility#directory_of_file()) . (s:fish ? '; and ' : ' && ') . a:cmd
 endfunction
 
 function! gitgutter#utility#highlight_name_for_change(text)
@@ -143,4 +167,18 @@ endfunction
 
 function! gitgutter#utility#strip_trailing_new_line(line)
   return substitute(a:line, '\n$', '', '')
+endfunction
+
+function! gitgutter#utility#git_version()
+  return matchstr(system('git --version'), '[0-9.]\+')
+endfunction
+
+" True for git v1.7.2+.
+function! gitgutter#utility#git_supports_command_line_config_override()
+  let [major, minor, patch; _] = split(gitgutter#utility#git_version(), '\.')
+  return major > 1 || (major == 1 && minor > 7) || (minor == 7 && patch > 1)
+endfunction
+
+function! gitgutter#utility#stringify(list)
+  return join(a:list, "\n")."\n"
 endfunction
