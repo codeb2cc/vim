@@ -6,6 +6,7 @@
     " Basics {
         set nocompatible
         set t_Co=256
+        set shell=bash
     " }
     " Pathogen Setting {
         call pathogen#runtime_append_all_bundles()
@@ -45,11 +46,7 @@
                 execute "colorscheme chela_light"
             endif
         else
-            if time > 18 || time < 6
-                execute "colorscheme xterm16"
-            else
-                execute "colorscheme molokai"
-            endif
+            execute "colorscheme xterm16"
         endif
     " }
 
@@ -181,7 +178,7 @@
         let g:syntastic_stl_format = '[E:%e %fe, W:%w #%fw]'
         nmap <silent> <F4> :SyntasticCheck<CR>
         let g:syntastic_python_checkers = ['flake8']
-        let g:syntastic_python_flake8_args = "--max-line-length 120 --ignore E203,E226,E241,E242,W391,F841"
+        let g:syntastic_python_flake8_args = "--max-line-length 120 --ignore E203,E226,E241,E242,E501,W391,F841"
         let g:syntastic_javascript_checkers = ['jshint']
     " }
 
