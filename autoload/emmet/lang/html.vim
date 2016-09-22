@@ -1,6 +1,7 @@
+let s:bx = '{\%("[^"]*"\|''[^'']*''\|\$#\|\${\w\+}\|\$\+\|{[^{]\+\|[^{}]\)\{-}}'
 let s:mx = '\([+>]\|[<^]\+\)\{-}\s*'
 \     .'\((*\)\{-}\s*'
-\       .'\([@#.]\{-}[a-zA-Z_\!][a-zA-Z0-9:_\!\-$]*\|{\%([^%$}]\+\|\$#\|\${\w\+}\|\$\+\)*}*[ \t\r\n}]*\|\[[^\]]\+\]\)'
+\       .'\([@#.]\{-}[a-zA-Z_\!][a-zA-Z0-9:_\!\-$]*\|' . s:bx . '\|\[[^\]]\+\]\)'
 \       .'\('
 \         .'\%('
 \           .'\%(#{[{}a-zA-Z0-9_\-\$]\+\|#[a-zA-Z0-9_\-\$]\+\)'
@@ -8,7 +9,7 @@ let s:mx = '\([+>]\|[<^]\+\)\{-}\s*'
 \           .'\|\%(\.{[{}a-zA-Z0-9_\-\$]\+\|\.[a-zA-Z0-9_\-\$]\+\)'
 \         .'\)*'
 \       .'\)'
-\       .'\%(\({\%([^$}]\+\|\$#\|\${\w\+}\|\$\+\)*}\+\)\)\{0,1}'
+\       .'\%(\(' . s:bx . '\+\)\)\{0,1}'
 \         .'\%(\(@-\{0,1}[0-9]*\)\{0,1}\*\([0-9]\+\)\)\{0,1}'
 \     .'\(\%()\%(\(@-\{0,1}[0-9]*\)\{0,1}\*[0-9]\+\)\{0,1}\)*\)'
 
@@ -144,8 +145,10 @@ function! emmet#lang#html#parseIntoTree(abbr, type) abort
         let tag_name = pmap[pname]
       elseif !empty(pname) && index(inlineLevel, pname) > -1
         let tag_name = 'span'
-      else
+      elseif len(parent.child) == 0 || len(custom) == 0
         let tag_name = 'div'
+      else
+        let tag_name = custom
       endif
     endif
 
@@ -192,14 +195,12 @@ function! emmet#lang#html#parseIntoTree(abbr, type) abort
 
     for k in keys(custom_expands)
       if tag_name =~# k
-        let current.snippet = '${' . custom . '}'
+        let current.snippet = '${' . (empty(custom) ? tag_name : custom) . '}'
         let current.name = ''
         break
       elseif custom =~# k
-        let cc = emmet#newNode()
-        let cc.snippet = '${' . custom . '}'
-        let cc.name = ''
-        call add(current.child, cc)
+        let current.snippet = '${' . custom . '}'
+        let current.name = ''
         break
       endif
     endfor
@@ -372,14 +373,14 @@ function! emmet#lang#html#parseIntoTree(abbr, type) abort
             let last.pos += 1
           endif
         elseif len(n)
-          let start = 0
+          let st = 0
           for nc in range(len(last.child))
             if last.child[nc].block
-              let start = nc
+              let st = nc
               break
             endif
           endfor
-          let cl = last.child[nc:]
+          let cl = last.child[st :]
           let cls = []
           for c in range(n[1:])
             for cc in cl
@@ -391,8 +392,8 @@ function! emmet#lang#html#parseIntoTree(abbr, type) abort
             endfor
             let cls += deepcopy(cl)
           endfor
-          if nc > 0
-            let last.child = last.child[:nc-1] + cls
+          if st > 0
+            let last.child = last.child[:st-1] + cls
           else
             let last.child = cls
           endif
@@ -512,16 +513,32 @@ function! emmet#lang#html#toString(settings, current, type, inline, filters, ite
             let Val .= ' '
           endif
           if _val =~# '^_'
-            let lead = vals[0]
-            let Val .= lead . _val
-          elseif _val =~# '^-'
-            if len(lead) == 0
-              let pattr = current.parent.attr
-              if has_key(pattr, 'class')
-                let lead = split(pattr['class'], '\s\+')[0]
+            if has_key(current.parent.attr, 'class')
+              let lead = current.parent.attr["class"]
+              if _val =~# '^__'
+                let Val .= lead . _val
+              else
+                let Val .= lead . ' ' . lead . _val
               endif
+            else
+              let lead = split(vals[0], '_')[0]
+              let Val .= lead . _val
             endif
-            let Val .= lead . _val
+          elseif _val =~# '^-'
+            for l in split(_val, '_')
+              if len(Val) > 0
+                let Val .= ' '
+              endif
+              let l = substitute(l, '^-', '__', '')
+              if len(lead) == 0
+                let pattr = current.parent.attr
+                if has_key(pattr, 'class')
+                  let lead = split(pattr['class'], '\s\+')[0]
+                endif
+              endif
+              let Val .= lead . l
+              let lead .= l . '_'
+            endfor
           else
             let Val .= _val
           endif
