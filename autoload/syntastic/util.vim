@@ -37,12 +37,18 @@ function! syntastic#util#system(command) abort " {{{2
     let $LC_MESSAGES = 'C'
     let $LC_ALL = ''
 
+    let cmd_start = reltime()
     let out = system(a:command)
+    let cmd_time = split(reltimestr(reltime(cmd_start)))[0]
 
     let $LC_ALL = old_lc_all
     let $LC_MESSAGES = old_lc_messages
 
     let &shell = old_shell
+
+    if exists('g:_SYNTASTIC_DEBUG_TRACE')
+        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'system: command run in ' . cmd_time . 's')
+    endif
 
     return out
 endfunction " }}}2
@@ -265,6 +271,36 @@ function! syntastic#util#findGlobInParent(what, where) abort " {{{2
     return ''
 endfunction " }}}2
 
+" Returns the buffer number of a filename
+" @vimlint(EVL104, 1, l:old_shellslash)
+function! syntastic#util#fname2buf(fname) abort " {{{2
+    if exists('+shellslash')
+        " bufnr() can't cope with backslashes
+        let old_shellslash = &shellslash
+        let &shellslash = 1
+    endif
+
+    " this is a best-effort attempt to escape file patterns (cf. :h file-pattern)
+    " XXX it fails for filenames containing something like \{2,3}
+    for md in [':~:.', ':~', ':p']
+        let buf = bufnr('^' . escape(fnamemodify(a:fname, md), '\*?,{}[') . '$')
+        if buf != -1
+            break
+        endif
+    endfor
+    if buf == -1
+        " XXX definitely wrong, but hope is the last thing to die :)
+        let buf = bufnr(fnamemodify(a:fname, ':p'))
+    endif
+
+    if exists('+shellslash')
+        let &shellslash = old_shellslash
+    endif
+
+    return buf
+endfunction " }}}2
+" @vimlint(EVL104, 0, l:old_shellslash)
+
 " Returns unique elements in a list
 function! syntastic#util#unique(list) abort " {{{2
     let seen = {}
@@ -336,10 +372,8 @@ function! syntastic#util#stamp() abort " {{{2
     return split( split(reltimestr(reltime(g:_SYNTASTIC_START)))[0], '\.' )
 endfunction " }}}2
 
-function! syntastic#util#setChangedtick() abort " {{{2
-    unlockvar! b:syntastic_changedtick
-    let b:syntastic_changedtick = b:changedtick
-    lockvar! b:syntastic_changedtick
+function! syntastic#util#setLastTick(buf) abort " {{{2
+    call setbufvar(a:buf, 'syntastic_lasttick', getbufvar(a:buf, 'changedtick'))
 endfunction " }}}2
 
 let s:_wid_base = 'syntastic_' . getpid() . '_' . reltimestr(g:_SYNTASTIC_START) . '_'
